@@ -11,7 +11,7 @@ async function batch (type, createdAt) {
 }
 
 async function scheduler() {
-  cron.schedule('* 6 * * * *', async () => {
+  cron.schedule('0 * * * *', async () => {
     const createdAt = Date.now();
     await batch('parking', createdAt);
     await batch('flat', createdAt);
