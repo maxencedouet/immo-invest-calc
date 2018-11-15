@@ -1,0 +1,26 @@
+{
+  "name": "immo-invest-calc",
+  "version": "2.0.0",
+  "description": "Analyse the web",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Maxence Douet",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cli-table": "^0.3.1",
+    "cors": "^2.8.4",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "grubbs": "^1.3.1",
+    "log": "^1.4.0",
+    "mongoose": "^5.3.9",
+    "node-cron": "^2.0.3",
+    "nodemon": "^1.18.6",
+    "roarr": "^2.11.6",
+    "util": "^0.11.1"
+  }
+}
