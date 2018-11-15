@@ -1,19 +1,7 @@
 const Property = require('./property-model')
 const Table = require('cli-table');
 
-async function getRentability(propertyType) {
-  console.log('calculating')
-  const succ = await Property.find(
-    {
-      propertyType,
-      transactionType: 'buy',
-      id: { $exists: true},
-      duration: { $gte: 0, $lte: 250 }
-    }
-  )
-  .sort({ distance: 1 })
-  .limit(20)
-
+async function pretty(succ) {
   const base = 'https://www.bienici.com/annonce/'
 
   const table = new Table({
@@ -35,7 +23,23 @@ async function getRentability(propertyType) {
     table.push(data)
   })
 
-  return table.toString()
+  return table;
 }
 
-module.exports = { getRentability }
+async function getRentability(propertyType) {
+  console.log('calculating')
+  const succ = await Property.find(
+    {
+      propertyType,
+      transactionType: 'buy',
+      id: { $exists: true},
+      duration: { $gte: 0, $lte: 250 }
+    }
+  )
+  .sort({ distance: 1 })
+  .limit(20)
+
+  return succ
+}
+
+module.exports = { getRentability, pretty }
