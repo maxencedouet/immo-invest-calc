@@ -34,6 +34,8 @@ async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
   while ( i < maxIterations ) {
     ({ data } = await get(filterType, propertyType, minPrice, price))
     x = data.realEstateAds[0].price
+
+    if(x.length > 0) { x = x[0] }
     y = data.total
 
     if( y == lastY || (upperInterval > y && underInterval < y )) {
@@ -68,7 +70,7 @@ async function regression(filterType, propertyType, limit) {
   maxPrice = data.realEstateAds[0].price
   total = data.total
   price = getRegPrice(0, 0, maxPrice, total, limit)
-
+  console.log('fuck', maxPrice, total, price)
   while(succ.total > 10) {
     succ = await getPrice(filterType, propertyType, limit, succ.price, maxPrice);
     console.log('Best price found: ', succ.price)
