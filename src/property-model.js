@@ -2,24 +2,25 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Property = new Schema({
+  //usefull
   createdAt: Date,
   coordinates: [Number],
-  rent10: Number,
   propertyType: String,
   transactionType: String,
   id: String,
   city: String,
-  minLoc: Number,
-  loc10: String,
-  loc10Array: Array,
   surfaceArea: String,
   postalCode: String,
   title: String,
   publicationDate: String,
   price: Number,
+
+  //calculated
   duration: Number,
+  rent10: Number,
   distance: Number,
 
+  //useless
   blurInfo: Schema.Types.Mixed,
   adType: String,
   reference: String,

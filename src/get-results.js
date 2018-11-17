@@ -1,45 +1,40 @@
-const Property = require('./property-model')
-const Table = require('cli-table');
+const Property = require('./property-model');
+const { isJsonString } = require('./support-functions');
 
-async function pretty(succ) {
-  const base = 'https://www.bienici.com/annonce/'
 
-  const table = new Table({
-      head: ['URL', 'Price', 'm2', 'Price/m2', 'minLoc', 'Payback', 'Duration', 'Ditance']
-    , colWidths: [110, 8, 8, 10, 8, 8, 10, 50, 10]
-  });
+const fake = [
+  {
+    id: 1,
+    price: 1.1
+  },
+  {
+    id: 2,
+    price: 1.2
+  }
+]
 
-  //should filter bad minLoc
-  const [...temp] = succ.map((x, i)=>{
-    const data = [
-      `${base}vente/${x.city}/parking-box/${x.id}`,
-      x.price,
-      (x.surfaceArea || 'NC'),
-      (Math.floor(x.price/x.surfaceArea) || 'NC'),
-      Math.floor(x.minLoc), Math.floor(x.rent10),
-      x.duration,
-      x.distance
-    ]
-    table.push(data)
-  })
+async function query(input) {
+    if(!isJsonString(input)) { return []}
 
-  return table;
+    const query = JSON.parse(input);
+    // const properties = await Property.find(query);
+
+    return fake;
 }
 
+
 async function getRentability(propertyType) {
-  console.log('calculating')
-  const succ = await Property.find(
-    {
-      propertyType,
-      transactionType: 'buy',
-      id: { $exists: true},
-      duration: { $gte: 0, $lte: 250 }
-    }
-  )
+  const transactionType = 'type'
+  const id = { $exists: true }
+  const duration = { $gte: 0, $lte: 250 }
+  const query = { propertyType, transactionType, id, duration }
+
+  const succ = await Property.find(query)
   .sort({ distance: 1 })
   .limit(20)
 
   return succ
 }
 
-module.exports = { getRentability, pretty }
+
+module.exports = { getRentability, query }

@@ -1,0 +1,16 @@
+#table {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-header, .table-row {
+  display: flex;
+}
+
+.table-header {
+  font-weight: bold;
+}
+
+.table-cell {
+  flex: 1
+}

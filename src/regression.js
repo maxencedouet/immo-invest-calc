@@ -2,14 +2,12 @@ const Property = require('./property-model');
 const { call } = require('./crawler')
 
 async function get(filterType, propertyType, minPrice, maxPrice) {
-    let query = {
-      minPrice, maxPrice, filterType,
-      "from": 0,
-      "propertyType":[propertyType],
-      "sortBy":"price",
-      "sortOrder":"desc",
-      "onTheMarket":[true]
-    }
+    const from = 0;
+    const sortBy = 'price'
+    const sortOrder = 'desc'
+    const onTheMarket = [true]
+    propertyType = [propertyType]
+    const query = { minPrice, maxPrice, filterType, from, propertyType, sortBy, sortOrder, onTheMarket }
     return call(query)
 }
 
@@ -27,7 +25,6 @@ async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
   let lastX = 0;
   let lastY = 0;
   let data, x, y, price;
-  let screen = 'Calculating'
   const upperInterval = limit * (1 + interval);
   const underInterval = limit * (1 - interval);
 
@@ -35,7 +32,10 @@ async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
     ({ data } = await get(filterType, propertyType, minPrice, price))
     x = data.realEstateAds[0].price
 
-    if(x.length > 0) { x = x[0] }
+    if(x.length > 0) {
+      console.log('Carreful !!!!', x, lastX)
+      x = x[0] || x[1] || lastX
+    }
     y = data.total
 
     if( y == lastY || (upperInterval > y && underInterval < y )) {
@@ -54,8 +54,6 @@ async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
         lastX = x; lastY = y;
         i++
       }
-      screen += '.'
-      process.stdout.write(screen+'\r');
     }
   }
 
@@ -70,10 +68,9 @@ async function regression(filterType, propertyType, limit) {
   maxPrice = data.realEstateAds[0].price
   total = data.total
   price = getRegPrice(0, 0, maxPrice, total, limit)
-  console.log('fuck', maxPrice, total, price)
+
   while(succ.total > 10) {
     succ = await getPrice(filterType, propertyType, limit, succ.price, maxPrice);
-    console.log('Best price found: ', succ.price)
     prices.push(succ.price)
   }
 

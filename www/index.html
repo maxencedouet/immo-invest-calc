@@ -1,80 +1,12 @@
 <html>
+  <title>Warren</title>
+  <link href="index.css" rel="stylesheet">
 
   <body>
-    <div id="container" style="height: 100vh; min-width: 310px"></div>
+    <div>Hello ! My name is Warren :)</div>
+    <input placeholder="Type your query" id="input" onchange="getData()"/>
+    <div id="table"></div>
   </body>
 
-
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <script src="https://code.highcharts.com/stock/highstock.js"></script>
-  <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-  <script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
-  <script>
-
-    function Comparator(a, b) {
-       if (a[0] < b[0]) return -1;
-       if (a[0] > b[0]) return 1;
-       return 0;
-     }
-
-    async function getData () {
-      const raw = await fetch('http://localhost:3000')
-      const succ = await raw.json()
-
-      const json = succ.map(({fields: {customfield_10024: storyPoints, status: {name}, updated}})=>{
-        const date = new Date(updated);
-
-        if(name == 'Done' || name == 'In test') {
-          return [ date.getTime(), storyPoints || 1 ]
-        } else {
-          return [ date.getTime(), 0 ]
-        }
-      })
-
-      const data = json.sort(Comparator)
-
-      let lastStoryPoint = 0
-      const total = data.map((issues)=>{
-        lastStoryPoint += issues[1]
-        return [ issues[0], lastStoryPoint ]
-      })
-
-      Highcharts.chart('container', {
-          title: {
-              text: 'Dashboard'
-          },
-          subtitle: {
-            text: 'JQL: -Done- AND -In test- Story points BY -maxence-'
-          },
-          xAxis: {
-              type: 'datetime',
-              dateTimeLabelFormats: {
-                  month: '%e. %b',
-                  year: '%b'
-              },
-              title: {
-                  text: 'Date'
-              }
-          },
-          yAxis: {
-              title: {
-                  text: 'Number of Story Points'
-              },
-              min: 0
-          },
-          series: [{
-              name: "Dayly",
-              type: 'column',
-              data: data
-          }, {
-            name: "Total",
-            data: total
-          }]
-      });
-
-
-
-    }
-    getData()
-  </script>
+  <script src="index.js"></script>
 </html>
