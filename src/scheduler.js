@@ -4,10 +4,12 @@ const calcPayback = require('./calc-payback')
 const calcDuration = require('./calc-duration')
 
 async function batch (type, createdAt) {
+  console.log('Batch ', type, ' launched !')
   await importProperties('rent', type, createdAt)
   await importProperties('buy', type, createdAt)
   await calcPayback(type, 10)
   await calcDuration(type, 10)
+  console.log('Batch ', type, ' finished !')
 }
 
 async function scheduler() {
@@ -22,4 +24,4 @@ async function scheduler() {
   });
 }
 
-module.exports = scheduler;
+module.exports = { scheduler, batch };

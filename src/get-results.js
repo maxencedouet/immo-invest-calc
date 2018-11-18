@@ -2,24 +2,10 @@ const Property = require('./property-model');
 const { isJsonString } = require('./support-functions');
 
 
-const fake = [
-  {
-    id: 1,
-    price: 1.1
-  },
-  {
-    id: 2,
-    price: 1.2
-  }
-]
-
 async function query(input) {
     if(!isJsonString(input)) { return []}
-
     const query = JSON.parse(input);
-    // const properties = await Property.find(query);
-
-    return fake;
+    return Property.find(query)
 }
 
 

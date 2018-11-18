@@ -41,7 +41,7 @@ async function calc(property, number) {
     .find(query)
     .limit(5) || []
 
-  const rentsPrices = filterOutliers(succ.map((x)=> x.price));
+  const rentsPrices = filterOutliers(rents.map((x)=> x.price));
 
   const minRentPrice = Math.min(...rentsPrices)
   const rent = Math.floor(price / minRentPrice);
@@ -58,6 +58,7 @@ async function calcPayback(propertyType, number) {
   const transactionType = 'buy'
 
   const properties = await Property.find({ propertyType, transactionType });
+
   const promises = properties.map((property) => calc(property, number))
   await Promise.all(promises)
 
@@ -65,7 +66,7 @@ async function calcPayback(propertyType, number) {
 }
 
 
-async function slowCalc() {
+async function slowCalc(properties) {
   let i = 0
   while(i < properties.length) {
     await calc(properties[i], number)

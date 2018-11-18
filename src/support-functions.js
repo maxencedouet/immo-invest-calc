@@ -1,4 +1,6 @@
 const Table = require('cli-table');
+const grubbs = require('grubbs');
+
 
 function isJsonString(str) {
   try {
@@ -9,9 +11,11 @@ function isJsonString(str) {
   return true
 }
 
+
 function filterOutliers(input) {
+  if(input.length == 0) { return []}
   const { gPass } = grubbs.test(input)[0]
-  const rawGrubPrices = gPass.map((x, i)=>{ if(x) { return prices[i] } })
+  const rawGrubPrices = gPass.map((x, i)=>{ if(x) { return input[i] } })
   return rawGrubPrices.filter((x)=>x !== undefined)
 }
 

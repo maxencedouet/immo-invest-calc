@@ -18,8 +18,8 @@ function getRegPrice(x0, y0, x1, y1, limit) {
 }
 
 async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
-  const maxIterations = 10;
-  const interval = 0.1;
+  const maxIterations = 20;
+  const interval = 0.05;
 
   let i = 0;
   let lastX = 0;
@@ -34,7 +34,7 @@ async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
 
     if(x.length > 0) {
       console.log('Carreful !!!!', x, lastX)
-      x = x[0] || x[1] || lastX
+      x = x[0] || x[1] || lastX || 1
     }
     y = data.total
 
@@ -71,9 +71,9 @@ async function regression(filterType, propertyType, limit) {
 
   while(succ.total > 10) {
     succ = await getPrice(filterType, propertyType, limit, succ.price, maxPrice);
-    prices.push(succ.price)
+    prices.push(succ.price);
+    console.log(prices)
   }
-
   return prices;
 }
 

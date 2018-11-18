@@ -50,14 +50,17 @@ async function crawl(filterType, propertyType, minPrice, maxPrice, createdAt) {
 
   while (query.from < succ.data.total) {
     try {
+      console.log(query.from, succ.data.total)
       succ = await insert(query, createdAt)
       query.from += succ.data.perPage
     } catch(e) {
-      console.log('error // last crawled', query.from)
+      console.log('error // last crawled', query.from, e)
       succ.data.perPage = 0
+      query.from = succ.data.total
+      // return succ.data.total
     }
   }
-
+  console.log('fuck')
   return succ.data.total
 }
 
