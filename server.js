@@ -12,20 +12,18 @@ const calcDuration = require('./src/calc-duration');
 
 const DB_USER = process.env.DB_USER;
 const DB_PWD = process.env.DB_PWD;
+const ENV = process.env.ENV;
 
 const PORT = 3000
-const url = `mongodb://${DB_USER}:${DB_PWD}@ds151513.mlab.com:51513/immo-invest`
-console.log('server launched on port', PORT);
+const url = (ENV == 'local') ? 'mongodb://localhost:27017/immo-invest' : `mongodb://${DB_USER}:${DB_PWD}@ds151513.mlab.com:51513/immo-invest`
+console.log('Server launched on port', PORT);
 
 const app = express()
 app.use(cors())
 app.use(express.static('www'))
 mongoose.connect(url, { useNewUrlParser: true });
 
-
-const createdAt = Date.now()
-batch('flat', createdAt)
-
+// scheduler()
 
 app.get('/', async function (req, res) {
   res.sendFile( __dirname + "/www/index.html" );

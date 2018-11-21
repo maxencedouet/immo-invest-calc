@@ -18,8 +18,8 @@ function getRegPrice(x0, y0, x1, y1, limit) {
 }
 
 async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
-  const maxIterations = 20;
-  const interval = 0.05;
+  const maxIterations = 25;
+  const interval = 0.1;
 
   let i = 0;
   let lastX = 0;

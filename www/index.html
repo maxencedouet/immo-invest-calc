@@ -3,10 +3,27 @@
   <link href="index.css" rel="stylesheet">
 
   <body>
-    <div>Hello ! My name is Warren :)</div>
-    <input placeholder="Type your query" id="input" onchange="getData()"/>
+    <div class="nav">
+      <div class="nav-query" id="editor"></div>
+      <!-- <textarea class="nav-query" placeholder="Type your query" id="query">[{"$limit":50},{"$sort":{"price": 1}}, {"$project": { "_id":0, "publicationDate": 1, "adType": 1, "city": 1, "price": 1}}]</textarea> -->
+      <button class="nav-btn" onclick="getData('table')">Draw Table</button>
+      <div class="graph-option">
+        <input placeholder="X" id="x" class="graph-option-first" value="price"/>
+        <input placeholder="group" id="xOption" class="graph-option-second" value="0"/>
+      </div>
+      <div class="graph-option">
+        <input placeholder="Y" id="y" class="graph-option-first" value="count"/>
+        <input placeholder="aggr" class="graph-option-second" id="yOption" value="distinct"/>
+      </div>
+      <button class="nav-btn" onclick="getData('chart')">Draw Chart</button>
+    </div>
+
     <div id="table"></div>
   </body>
+
+  <script src="libs/highstocks.js"></script>
+  <script src="libs/ace.js"></script>
+  <script src="libs/mode-json.js"></script>
 
   <script src="index.js"></script>
 </html>

@@ -1,10 +1,44 @@
-#table {
+body {
   display: flex;
-  flex-direction: column;
+  margin: 0
+}
+
+
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: 100%
+}
+
+.nav-query {
+  flex: 1;
+}
+
+
+.graph-option {
+  display: flex;
+}
+
+.graph-option-first {
+  width: 70%
+}
+
+.graph-option-second {
+  width: 30%
+}
+
+
+#table {
+  overflow-y: scroll;
+  height: 100%;
+  flex: 1;
 }
 
 .table-header, .table-row {
   display: flex;
+
 }
 
 .table-header {
@@ -12,5 +46,6 @@
 }
 
 .table-cell {
-  flex: 1
+  flex: 1;
+  margin: 10px
 }
