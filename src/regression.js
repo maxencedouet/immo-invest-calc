@@ -18,12 +18,15 @@ function getRegPrice(x0, y0, x1, y1, limit) {
 }
 
 async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
-  const maxIterations = 25;
+  const maxIterations = 50;
   const interval = 0.1;
 
   let i = 0;
   let lastX = 0;
   let lastY = 0;
+  let lastXs = []
+  let lastYs = []
+
   let data, x, y, price;
   const upperInterval = limit * (1 + interval);
   const underInterval = limit * (1 - interval);
@@ -38,13 +41,21 @@ async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
     }
     y = data.total
 
+    console.log('nb', x, y)
+
     if( y == lastY || (upperInterval > y && underInterval < y )) {
       i = maxIterations
     } else {
       if(data.total > limit) {
         price = getRegPrice(minPrice, 0, x, y, limit)
       } else {
-        price = getRegPrice(x, y, lastX, lastY, limit)
+        if(lastY < limit) {
+          const lastUpYIndex = lastYs.indexOf((y) => { return y > limit })
+
+          // price = getRegPrice(x, y, lastX, lastY, limit)
+        } else {
+          price = getRegPrice(x, y, lastX, lastY, limit)
+        }
       }
 
       if(price > maxPrice) {
@@ -52,6 +63,7 @@ async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
         i = maxIterations
       } else {
         lastX = x; lastY = y;
+        lastXs.push(x); lastYs.push(y)
         i++
       }
     }

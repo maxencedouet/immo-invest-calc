@@ -23,7 +23,7 @@ app.use(cors())
 app.use(express.static('www'))
 mongoose.connect(url, { useNewUrlParser: true });
 
-// scheduler()
+scheduler()
 
 app.get('/', async function (req, res) {
   res.sendFile( __dirname + "/www/index.html" );

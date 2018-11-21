@@ -27,6 +27,9 @@ async function scheduler() {
     await calcBatch('parking')
     await calcBatch('flat')
   });
+
+  //always on
+  setInterval(()=>{}, 10000)
 }
 
 module.exports = { scheduler, batch };
