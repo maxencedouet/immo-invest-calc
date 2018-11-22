@@ -2,6 +2,7 @@ const cron = require('node-cron');
 const importProperties = require('./import-properties');
 const calcPayback = require('./calc-payback')
 const calcDuration = require('./calc-duration')
+const axios = require('axios');
 
 async function batch (type, createdAt) {
   console.log('Batch ', type, ' launched !')
@@ -16,20 +17,18 @@ async function calcBatch (type) {
 }
 
 async function scheduler() {
-  cron.schedule('0 * * * *', async () => {
+  // cron.schedule('0 * * * *', async () => {
     const createdAt = Date.now();
-    await batch('parking', createdAt);
+    // await batch('parking', createdAt);
     await batch('flat', createdAt);
-  });
-
-  cron.schedule('30 * * * *', async () => {
     console.log('cron started')
-    await calcBatch('parking')
-    await calcBatch('flat')
-  });
+    // await calcBatch('parking')
+    // await calcBatch('flat')
+  // });
 
-  //always on
-  setInterval(()=>{}, 10000)
+  setInterval(()=>{
+      axios.get('https://warren.now.sh/q')
+  }, 10000)
 }
 
 module.exports = { scheduler, batch };
