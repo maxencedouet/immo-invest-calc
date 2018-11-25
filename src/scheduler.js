@@ -17,18 +17,19 @@ async function calcBatch (type) {
 }
 
 async function scheduler() {
-  cron.schedule('0 * * * *', async () => {
-    const createdAt = Date.now();
-    await batch('flat', createdAt);
-    await batch('parking', createdAt);
-    console.log('cron started')
-    await calcBatch('flat')
-    await calcBatch('parking')
-  });
-
-  setInterval(()=>{
-      axios.get('https://warren.now.sh/q')
-  }, 10000)
+    setTimeout(()=>{
+        setInterval(()=>{
+            axios.get('https://warren.now.sh/q')
+        }, 10000)
+    }, 60000)
+    cron.schedule('0 * * * *', async () => {
+        const createdAt = Date.now();
+        await batch('flat', createdAt);
+        await batch('parking', createdAt);
+        console.log('cron started')
+        await calcBatch('flat')
+        await calcBatch('parking')
+    });
 }
 
 module.exports = { scheduler, batch };

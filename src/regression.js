@@ -8,7 +8,7 @@ async function get(filterType, propertyType, minPrice, maxPrice) {
     const onTheMarket = [true]
     propertyType = [propertyType]
     const query = { minPrice, maxPrice, filterType, from, propertyType, sortBy, sortOrder, onTheMarket }
-    return call(query)
+    return call(query);
 }
 
 function getRegPrice(x0, y0, x1, y1, limit) {

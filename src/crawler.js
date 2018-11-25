@@ -7,12 +7,23 @@ const base = 'https://www.bienici.com/realEstateAds-all.json';
 async function call(query) {
   const encoded = encodeURIComponent(JSON.stringify(query));
   const url = `${base}?filters=${encoded}`;
-  return axios.get(url);
+  let succ;
+  let next = false;
+  while (!next) {
+      try {
+          succ = await axios.get(url)
+          next = true;
+      } catch(e) {
+          console.log('err')
+      }
+  }
+  return succ;
 }
 
 
 async function insert(query, createdAt) {
     const succ = await call(query)
+
     const promises = succ.data.realEstateAds.map((property) => {
       if(property
         && property.id
