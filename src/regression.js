@@ -37,7 +37,12 @@ async function getPrice(filterType, propertyType, limit, minPrice, maxPrice) {
 
     if(x.length > 0) {
       console.log('Carreful !!!!', x, lastX)
-      x = x[0] || x[1] || lastX || 1
+      if(x[0] > lastX) {
+          x = x[0]
+      } else {
+          x = x[1]
+      }
+
     }
     y = data.total
 
