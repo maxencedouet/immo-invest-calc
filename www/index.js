@@ -72,7 +72,7 @@ async function getData (type) {
   const filters = editor.getSession().getValue()
   const rawProperties = await fetch(`${window.location.href}q?filters=${filters}`)
   const properties = await rawProperties.json()
-
+  console.log(properties.length)
   if(type == 'chart') {
     drawChart(properties)
   } else if (type == 'table') {

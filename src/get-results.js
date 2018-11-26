@@ -5,8 +5,7 @@ const { isJsonString } = require('./support-functions');
 async function query(input) {
     if(!isJsonString(input)) { return []}
     const query = JSON.parse(input);
-    console.log(input)
-    const results = await Property.aggregate(query)
+    const results = await Property.aggregate(query);
     results.slice(0, 50)
     return results
 }
