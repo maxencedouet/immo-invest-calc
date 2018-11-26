@@ -16,8 +16,8 @@ const Property = new Schema({
   price: Number,
 
   //calculated
+  payback: Number,
   duration: Number,
-  rent10: Number,
   distance: Number,
 
   //useless

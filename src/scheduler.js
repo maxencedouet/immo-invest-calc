@@ -21,7 +21,8 @@ async function scheduler() {
         setInterval(()=>{
             axios.get('https://warren.now.sh/q')
         }, 10000)
-    }, 60000)
+    }, 60000);
+    
     cron.schedule('0 * * * *', async () => {
         const createdAt = Date.now();
         await batch('flat', createdAt);
