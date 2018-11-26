@@ -22,8 +22,8 @@ async function scheduler() {
             axios.get('https://warren.now.sh/q')
         }, 10000)
     }, 60000);
-    
-    cron.schedule('0 * * * *', async () => {
+
+    cron.schedule('0 9 * * *', async () => {
         const createdAt = Date.now();
         await batch('flat', createdAt);
         await batch('parking', createdAt);
